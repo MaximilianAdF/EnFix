@@ -56,7 +56,7 @@ export default function StrikethroughLink({
     );
 
     const commonStyles: React.CSSProperties = {
-        color: isHovered && hoverColor ? hoverColor : color,
+        color: isHovered ? (hoverColor || lineColor) : color,
         fontSize,
         fontWeight,
         position: "relative",
