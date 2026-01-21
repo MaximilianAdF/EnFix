@@ -1,65 +1,416 @@
-import Image from "next/image";
+"use client";
+
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import TypeWriter from "./components/TypeWriter";
+import RotatingWords from "./components/RotatingWords";
+import FadeIn from "./components/FadeIn";
+import Button from "./components/Button";
+
+const rotatingWords = ["fix", "debug", "refactor", "repair", "optimize", "rescue"];
+
+// Strikethrough link component for arrow links
+function StrikethroughLink({ href, children }: { href: string; children: React.ReactNode }) {
+  const [isHovered, setIsHovered] = useState(false);
+
+  return (
+    <Link
+      href={href}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        gap: "0.5rem",
+        fontSize: "1rem",
+        fontWeight: 500,
+        position: "relative",
+      }}
+    >
+      <span style={{ position: "relative" }}>
+        {children}
+        <span
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: 0,
+            width: isHovered ? "100%" : "0%",
+            height: "1px",
+            background: "var(--accent)",
+            transition: "width 0.4s ease",
+          }}
+        />
+      </span>
+      <span
+        style={{
+          transition: "transform 0.2s ease",
+          transform: isHovered ? "translateX(4px)" : "translateX(0)",
+        }}
+      >
+        →
+      </span>
+    </Link>
+  );
+}
+
+const navSections = [
+  {
+    href: "/whatwedo",
+    title: "what we do",
+    description: "Debugging, refactoring, and fixing AI-generated code",
+  },
+  {
+    href: "/howitworks",
+    title: "how it works",
+    description: "Submit → Diagnose → Fix → Deploy",
+  },
+  {
+    href: "/contact",
+    title: "contact",
+    description: "Get in touch for a quote",
+  },
+];
+
+const newsItems = [
+  {
+    date: "2026.01.21",
+    isNew: true,
+    title: "EnFix launches official website",
+    link: null,
+  },
+  {
+    date: "2026.01.15",
+    isNew: false,
+    title: "Now accepting projects for Q1 2026",
+    link: "/contact",
+  },
+];
+
+// Navigation link component with strikethrough hover
+function NavSectionLink({ href, title, description }: { href: string; title: string; description: string }) {
+  const [isHovered, setIsHovered] = useState(false);
+
+  return (
+    <Link
+      href={href}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      style={{
+        display: "block",
+        padding: "3rem 0",
+        borderBottom: "1px solid var(--border)",
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          flexWrap: "wrap",
+          gap: "1rem",
+        }}
+      >
+        <h2 className="nav-link-large" style={{ position: "relative", display: "inline-block" }}>
+          {title}
+          {/* Strikethrough line */}
+          <span
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: 0,
+              width: isHovered ? "100%" : "0%",
+              height: "2px",
+              background: "var(--accent)",
+              transition: "width 0.4s ease",
+            }}
+          />
+        </h2>
+        <span
+          style={{
+            fontSize: "1rem",
+            color: isHovered ? "var(--accent)" : "var(--text-secondary)",
+            display: "flex",
+            alignItems: "center",
+            gap: "0.5rem",
+            transition: "color 0.3s ease",
+          }}
+        >
+          {description}
+          <span style={{ 
+            transition: "transform 0.2s ease",
+            transform: isHovered ? "translateX(4px)" : "translateX(0)"
+          }}>→</span>
+        </span>
+      </div>
+    </Link>
+  );
+}
 
 export default function Home() {
+  const [hasScrolled, setHasScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setHasScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <div id="top">
+      {/* Hero Section */}
+      <section
+        style={{
+          minHeight: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center", // Centered for homepage
+          alignItems: "flex-start",
+          padding: "0 clamp(20px, 5vw, 60px) 60px",
+          position: "relative",
+        }}
+      >
+        <div style={{ maxWidth: "var(--content-max-width)", margin: "0 auto", width: "100%" }}>
+          {/* Main Hero Text */}
+          <h1 className="hero-text" style={{ marginBottom: "2rem" }}>
+            <TypeWriter text="enfix." speed={180} delay={500} />
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+
+          {/* Subtitle with rotating words */}
+          <p
+            className="body-large"
+            style={{
+              maxWidth: "600px",
+              color: "var(--text-secondary)",
+            }}
+          >
+            we{" "}
+            <RotatingWords words={rotatingWords} interval={2500} />
+            {" "}what AI couldn&apos;t.
+          </p>
+
+          {/* Secondary tagline */}
+          <p
+            style={{
+              marginTop: "1.5rem",
+              fontSize: "1rem",
+              color: "var(--text-light)",
+              fontStyle: "italic",
+            }}
+          >
+            one fix. done right.
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        {/* Scroll Indicator - fades out on scroll */}
+        <div
+          style={{
+            position: "absolute",
+            bottom: "40px",
+            left: "50%",
+            transform: `translateX(-50%) translateY(${hasScrolled ? "10px" : "0"})`,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: "0.5rem",
+            color: "var(--text-light)",
+            opacity: hasScrolled ? 0 : 0.6,
+            transition: "opacity 0.5s ease, transform 0.5s ease",
+            pointerEvents: "none",
+          }}
+        >
+          <span style={{ fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.1em" }}>
+            Scroll
+          </span>
+          <span style={{ 
+            fontSize: "1.25rem",
+            animation: hasScrolled ? "none" : "bounce 2s infinite",
+          }}>↓</span>
         </div>
-      </main>
+      </section>
+
+      {/* Divider */}
+      <div className="divider" style={{ margin: "0 clamp(20px, 5vw, 60px)" }} />
+
+      {/* Navigation Sections */}
+      <section style={{ padding: "var(--section-padding) clamp(20px, 5vw, 60px)" }}>
+        <div style={{ maxWidth: "var(--content-max-width)", margin: "0 auto" }}>
+          {navSections.map((section, index) => (
+            <FadeIn key={section.href} delay={index * 100}>
+              <NavSectionLink
+                href={section.href}
+                title={section.title}
+                description={section.description}
+              />
+            </FadeIn>
+          ))}
+        </div>
+      </section>
+
+      {/* About Section */}
+      <section
+        style={{
+          padding: "var(--section-padding) clamp(20px, 5vw, 60px)",
+          background: "var(--bg-secondary)",
+        }}
+      >
+        <div style={{ maxWidth: "var(--content-max-width)", margin: "0 auto" }}>
+          <FadeIn>
+            <p
+              className="text-small"
+              style={{
+                textTransform: "uppercase",
+                letterSpacing: "0.1em",
+                marginBottom: "2rem",
+              }}
+            >
+              About EnFix
+            </p>
+          </FadeIn>
+
+          <FadeIn delay={100}>
+            <h2
+              className="section-title"
+              style={{ marginBottom: "2rem", maxWidth: "800px" }}
+            >
+              embedded solutions for broken code.
+            </h2>
+          </FadeIn>
+
+          <FadeIn delay={200}>
+            <p
+              className="body-large"
+              style={{
+                color: "var(--text-secondary)",
+                maxWidth: "700px",
+                marginBottom: "2rem",
+              }}
+            >
+              EnFix is a tech consulting firm that specializes in debugging, refactoring,
+              and fixing AI-generated code. When your AI-built application, website, or
+              product doesn&apos;t work as expected, we step in to diagnose and repair it.
+            </p>
+          </FadeIn>
+
+          <FadeIn delay={300}>
+            <p
+              style={{
+                color: "var(--text-secondary)",
+                maxWidth: "700px",
+              }}
+            >
+              Our name comes from the Swedish &quot;En Fix&quot; (one fix) and the concept of
+              an &quot;infix&quot; — embedding something firmly in the middle. We embed quality
+              solutions into your codebase, fixing what&apos;s broken from the inside out.
+            </p>
+          </FadeIn>
+
+          <FadeIn delay={400}>
+            <div style={{ marginTop: "3rem" }}>
+              <StrikethroughLink href="/whatwedo">
+                Learn more about our services
+              </StrikethroughLink>
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* News Section */}
+      <section style={{ padding: "var(--section-padding) clamp(20px, 5vw, 60px)" }}>
+        <div style={{ maxWidth: "var(--content-max-width)", margin: "0 auto" }}>
+          <FadeIn>
+            <h2 className="section-title" style={{ marginBottom: "3rem" }}>
+              news
+            </h2>
+          </FadeIn>
+
+          <div>
+            {newsItems.map((item, index) => (
+              <FadeIn key={index} delay={index * 100}>
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "2rem",
+                    padding: "1.5rem 0",
+                    borderBottom: "1px solid var(--border)",
+                    alignItems: "flex-start",
+                  }}
+                >
+                  <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
+                    <span className="text-small" style={{ whiteSpace: "nowrap" }}>
+                      {item.date}
+                    </span>
+                    {item.isNew && (
+                      <span
+                        style={{
+                          fontSize: "0.75rem",
+                          color: "var(--accent)",
+                          fontWeight: 500,
+                          textTransform: "uppercase",
+                        }}
+                      >
+                        new
+                      </span>
+                    )}
+                  </div>
+                  <div>
+                    {item.link ? (
+                      <StrikethroughLink href={item.link}>
+                        {item.title}
+                      </StrikethroughLink>
+                    ) : (
+                      <span>{item.title}</span>
+                    )}
+                  </div>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section
+        style={{
+          padding: "var(--section-padding) clamp(20px, 5vw, 60px)",
+          background: "var(--bg-dark)",
+          color: "white",
+        }}
+      >
+        <div
+          style={{
+            maxWidth: "var(--content-max-width)",
+            margin: "0 auto",
+            textAlign: "center",
+          }}
+        >
+          <FadeIn>
+            <h2 className="section-title" style={{ marginBottom: "1.5rem" }}>
+              ready to fix your code?
+            </h2>
+          </FadeIn>
+
+          <FadeIn delay={100}>
+            <p
+              className="body-large"
+              style={{
+                color: "rgba(255, 255, 255, 0.7)",
+                marginBottom: "2.5rem",
+              }}
+            >
+              Get in touch and let&apos;s talk about your project.
+            </p>
+          </FadeIn>
+
+          <FadeIn delay={200}>
+            <Button href="/contact" variant="dark">
+              Contact Us →
+            </Button>
+          </FadeIn>
+        </div>
+      </section>
     </div>
   );
 }
