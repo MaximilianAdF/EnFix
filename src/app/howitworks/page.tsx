@@ -2,8 +2,8 @@
 
 import FullPageHero from "../components/FullPageHero";
 import FullPageSlide from "../components/FullPageSlide";
-import Button from "../components/Button";
 import FadeIn from "../components/FadeIn";
+import CTASection from "../components/CTASection";
 
 const steps = [
     {
@@ -249,37 +249,10 @@ export default function HowItWorks() {
             </section>
 
             {/* CTA Section */}
-            <section
-                style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    padding: "var(--section-padding) clamp(20px, 5vw, 60px)",
-                    background: "var(--bg-dark)",
-                    color: "white",
-                }}
-            >
-                <div style={{ textAlign: "center", maxWidth: "600px" }}>
-                    <h2
-                        className="section-title"
-                        style={{ marginBottom: "1.5rem" }}
-                    >
-                        ready to get started?
-                    </h2>
-                    <p
-                        className="body-large"
-                        style={{
-                            color: "rgba(255, 255, 255, 0.7)",
-                            marginBottom: "2.5rem",
-                        }}
-                    >
-                        Submit your project and we&apos;ll get back to you within 24 hours.
-                    </p>
-                    <Button href="/contact" variant="dark">
-                        Contact Us →
-                    </Button>
-                </div>
-            </section>
+            <CTASection
+                title="ready to get started?"
+                subtitle="Submit your project and we'll get back to you within 24 hours."
+            />
         </div>
     );
 }

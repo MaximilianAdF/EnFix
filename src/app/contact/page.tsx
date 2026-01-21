@@ -3,39 +3,7 @@
 import { useState, FormEvent } from "react";
 import FullPageHero from "../components/FullPageHero";
 import FadeIn from "../components/FadeIn";
-
-// Email link with strikethrough hover
-function EmailLink({ large = false }: { large?: boolean }) {
-    const [isHovered, setIsHovered] = useState(false);
-
-    return (
-        <a
-            href="mailto:hello@enfix.dev"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-            style={{
-                fontSize: large ? "1.25rem" : "1.25rem",
-                fontWeight: 500,
-                color: "var(--accent)",
-                position: "relative",
-                display: "inline-block",
-            }}
-        >
-            hello@enfix.dev
-            <span
-                style={{
-                    position: "absolute",
-                    top: "50%",
-                    left: 0,
-                    width: isHovered ? "100%" : "0%",
-                    height: "1px",
-                    background: "var(--accent)",
-                    transition: "width 0.4s ease",
-                }}
-            />
-        </a>
-    );
-}
+import EmailLink from "../components/EmailLink";
 
 export default function Contact() {
     const [formState, setFormState] = useState({
@@ -59,17 +27,6 @@ export default function Contact() {
         setIsSubmitted(true);
     };
 
-    // Tacto-style: transparent background with black border
-    const inputStyles: React.CSSProperties = {
-        width: "100%",
-        padding: "1.25rem",
-        fontSize: "1rem",
-        border: "1px solid var(--text-primary)",
-        background: "transparent",
-        transition: "border-color 0.3s ease",
-        outline: "none",
-    };
-
     const labelStyles: React.CSSProperties = {
         display: "block",
         fontSize: "0.75rem",
@@ -87,11 +44,7 @@ export default function Contact() {
                 title="contact."
                 subtitle="Have a project that needs fixing? Tell us about it and we'll get back to you within 24 hours."
             >
-                <p
-                    style={{
-                        marginTop: "2rem",
-                    }}
-                >
+                <p style={{ marginTop: "2rem" }}>
                     <EmailLink large />
                 </p>
             </FullPageHero>
@@ -251,13 +204,7 @@ export default function Contact() {
                                             onChange={(e) =>
                                                 setFormState({ ...formState, name: e.target.value })
                                             }
-                                            style={inputStyles}
-                                            onFocus={(e) => {
-                                                e.target.style.borderColor = "var(--accent)";
-                                            }}
-                                            onBlur={(e) => {
-                                                e.target.style.borderColor = "var(--text-primary)";
-                                            }}
+                                            className="form-input"
                                         />
                                     </div>
 
@@ -271,13 +218,7 @@ export default function Contact() {
                                             onChange={(e) =>
                                                 setFormState({ ...formState, email: e.target.value })
                                             }
-                                            style={inputStyles}
-                                            onFocus={(e) => {
-                                                e.target.style.borderColor = "var(--accent)";
-                                            }}
-                                            onBlur={(e) => {
-                                                e.target.style.borderColor = "var(--text-primary)";
-                                            }}
+                                            className="form-input"
                                         />
                                     </div>
 
@@ -290,13 +231,7 @@ export default function Contact() {
                                             onChange={(e) =>
                                                 setFormState({ ...formState, company: e.target.value })
                                             }
-                                            style={inputStyles}
-                                            onFocus={(e) => {
-                                                e.target.style.borderColor = "var(--accent)";
-                                            }}
-                                            onBlur={(e) => {
-                                                e.target.style.borderColor = "var(--text-primary)";
-                                            }}
+                                            className="form-input"
                                         />
                                     </div>
 
@@ -308,20 +243,7 @@ export default function Contact() {
                                             onChange={(e) =>
                                                 setFormState({ ...formState, projectType: e.target.value })
                                             }
-                                            style={{
-                                                ...inputStyles,
-                                                cursor: "pointer",
-                                                appearance: "none",
-                                                backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%230A0A0A' d='M6 8L1 3h10z'/%3E%3C/svg%3E")`,
-                                                backgroundRepeat: "no-repeat",
-                                                backgroundPosition: "right 1.25rem center",
-                                            }}
-                                            onFocus={(e) => {
-                                                e.target.style.borderColor = "var(--accent)";
-                                            }}
-                                            onBlur={(e) => {
-                                                e.target.style.borderColor = "var(--text-primary)";
-                                            }}
+                                            className="form-input form-select"
                                         >
                                             <option value="">Select a type...</option>
                                             <option value="debugging">Bug Fixing / Debugging</option>
@@ -344,48 +266,18 @@ export default function Contact() {
                                                 setFormState({ ...formState, description: e.target.value })
                                             }
                                             placeholder="Describe the issue, what AI tool was used, and what you're hoping to achieve..."
-                                            style={{
-                                                ...inputStyles,
-                                                resize: "vertical",
-                                                minHeight: "180px",
-                                                fontFamily: "inherit",
-                                            }}
-                                            onFocus={(e) => {
-                                                e.target.style.borderColor = "var(--accent)";
-                                            }}
-                                            onBlur={(e) => {
-                                                e.target.style.borderColor = "var(--text-primary)";
-                                            }}
+                                            className="form-input form-textarea"
                                         />
                                     </div>
 
-                                    {/* Submit - Softer button */}
+                                    {/* Submit */}
                                     <button
                                         type="submit"
                                         disabled={isSubmitting}
+                                        className="form-submit"
                                         style={{
-                                            padding: "1.25rem 2rem",
-                                            fontSize: "0.875rem",
-                                            fontWeight: 500,
-                                            textTransform: "uppercase",
-                                            letterSpacing: "0.05em",
-                                            background: "transparent",
-                                            color: isSubmitting ? "var(--text-secondary)" : "var(--text-primary)",
-                                            border: `1px solid ${isSubmitting ? "var(--text-secondary)" : "var(--text-primary)"}`,
+                                            opacity: isSubmitting ? 0.6 : 1,
                                             cursor: isSubmitting ? "not-allowed" : "pointer",
-                                            transition: "all 0.3s ease",
-                                        }}
-                                        onMouseEnter={(e) => {
-                                            if (!isSubmitting) {
-                                                e.currentTarget.style.background = "var(--text-primary)";
-                                                e.currentTarget.style.color = "var(--bg-primary)";
-                                            }
-                                        }}
-                                        onMouseLeave={(e) => {
-                                            if (!isSubmitting) {
-                                                e.currentTarget.style.background = "transparent";
-                                                e.currentTarget.style.color = "var(--text-primary)";
-                                            }
                                         }}
                                     >
                                         {isSubmitting ? "Sending..." : "Send Message →"}

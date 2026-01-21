@@ -5,53 +5,10 @@ import Link from "next/link";
 import TypeWriter from "./components/TypeWriter";
 import RotatingWords from "./components/RotatingWords";
 import FadeIn from "./components/FadeIn";
-import Button from "./components/Button";
+import StrikethroughLink from "./components/StrikethroughLink";
+import CTASection from "./components/CTASection";
 
 const rotatingWords = ["fix", "debug", "refactor", "repair", "optimize", "rescue"];
-
-// Strikethrough link component for arrow links
-function StrikethroughLink({ href, children }: { href: string; children: React.ReactNode }) {
-  const [isHovered, setIsHovered] = useState(false);
-
-  return (
-    <Link
-      href={href}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      style={{
-        display: "inline-flex",
-        alignItems: "center",
-        gap: "0.5rem",
-        fontSize: "1rem",
-        fontWeight: 500,
-        position: "relative",
-      }}
-    >
-      <span style={{ position: "relative" }}>
-        {children}
-        <span
-          style={{
-            position: "absolute",
-            top: "50%",
-            left: 0,
-            width: isHovered ? "100%" : "0%",
-            height: "1px",
-            background: "var(--accent)",
-            transition: "width 0.4s ease",
-          }}
-        />
-      </span>
-      <span
-        style={{
-          transition: "transform 0.2s ease",
-          transform: isHovered ? "translateX(4px)" : "translateX(0)",
-        }}
-      >
-        →
-      </span>
-    </Link>
-  );
-}
 
 const navSections = [
   {
@@ -112,7 +69,6 @@ function NavSectionLink({ href, title, description }: { href: string; title: str
       >
         <h2 className="nav-link-large" style={{ position: "relative", display: "inline-block" }}>
           {title}
-          {/* Strikethrough line */}
           <span
             style={{
               position: "absolute",
@@ -136,7 +92,7 @@ function NavSectionLink({ href, title, description }: { href: string; title: str
           }}
         >
           {description}
-          <span style={{ 
+          <span style={{
             transition: "transform 0.2s ease",
             transform: isHovered ? "translateX(4px)" : "translateX(0)"
           }}>→</span>
@@ -166,7 +122,7 @@ export default function Home() {
           minHeight: "100vh",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "center", // Centered for homepage
+          justifyContent: "center",
           alignItems: "flex-start",
           padding: "0 clamp(20px, 5vw, 60px) 60px",
           position: "relative",
@@ -204,7 +160,7 @@ export default function Home() {
           </p>
         </div>
 
-        {/* Scroll Indicator - fades out on scroll */}
+        {/* Scroll Indicator */}
         <div
           style={{
             position: "absolute",
@@ -224,7 +180,7 @@ export default function Home() {
           <span style={{ fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.1em" }}>
             Scroll
           </span>
-          <span style={{ 
+          <span style={{
             fontSize: "1.25rem",
             animation: hasScrolled ? "none" : "bounce 2s infinite",
           }}>↓</span>
@@ -311,7 +267,7 @@ export default function Home() {
           <FadeIn delay={400}>
             <div style={{ marginTop: "3rem" }}>
               <StrikethroughLink href="/whatwedo">
-                Learn more about our services
+                Learn more about our services →
               </StrikethroughLink>
             </div>
           </FadeIn>
@@ -339,9 +295,9 @@ export default function Home() {
                     alignItems: "flex-start",
                   }}
                 >
-                  <div style={{ 
-                    display: "flex", 
-                    gap: "1rem", 
+                  <div style={{
+                    display: "flex",
+                    gap: "1rem",
                     alignItems: "center",
                     minWidth: "140px",
                   }}>
@@ -364,7 +320,7 @@ export default function Home() {
                   <div>
                     {item.link ? (
                       <StrikethroughLink href={item.link}>
-                        {item.title}
+                        {item.title} →
                       </StrikethroughLink>
                     ) : (
                       <span>{item.title}</span>
@@ -378,45 +334,10 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section
-        style={{
-          padding: "var(--section-padding) clamp(20px, 5vw, 60px)",
-          background: "var(--bg-dark)",
-          color: "white",
-        }}
-      >
-        <div
-          style={{
-            maxWidth: "var(--content-max-width)",
-            margin: "0 auto",
-            textAlign: "center",
-          }}
-        >
-          <FadeIn>
-            <h2 className="section-title" style={{ marginBottom: "1.5rem" }}>
-              ready to fix your code?
-            </h2>
-          </FadeIn>
-
-          <FadeIn delay={100}>
-            <p
-              className="body-large"
-              style={{
-                color: "rgba(255, 255, 255, 0.7)",
-                marginBottom: "2.5rem",
-              }}
-            >
-              Get in touch and let&apos;s talk about your project.
-            </p>
-          </FadeIn>
-
-          <FadeIn delay={200}>
-            <Button href="/contact" variant="dark">
-              Contact Us →
-            </Button>
-          </FadeIn>
-        </div>
-      </section>
+      <CTASection
+        title="ready to fix your code?"
+        subtitle="Get in touch and let's talk about your project."
+      />
     </div>
   );
 }

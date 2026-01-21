@@ -1,96 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
-
-const socialLinks = [
-    { href: "https://github.com/enfix", label: "GitHub" },
-    { href: "https://linkedin.com/company/enfix", label: "LinkedIn" },
-    { href: "https://twitter.com/enfix_dev", label: "X" },
-];
-
-// Footer link with strikethrough hover effect
-function FooterLink({ href, children, external = false }: { href: string; children: React.ReactNode; external?: boolean }) {
-    const [isHovered, setIsHovered] = useState(false);
-
-    const content = (
-        <span style={{ position: "relative", display: "inline-block" }}>
-            {children}
-            <span
-                style={{
-                    position: "absolute",
-                    top: "50%",
-                    left: 0,
-                    width: isHovered ? "100%" : "0%",
-                    height: "1px",
-                    background: "var(--accent)",
-                    transition: "width 0.4s ease",
-                }}
-            />
-        </span>
-    );
-
-    if (external) {
-        return (
-            <a
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
-                style={{ fontSize: "0.9375rem" }}
-            >
-                {content}
-            </a>
-        );
-    }
-
-    return (
-        <Link
-            href={href}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-            style={{ fontSize: "0.9375rem" }}
-        >
-            {content}
-        </Link>
-    );
-}
-
-// Logo link with strikethrough hover
-function LogoLink() {
-    const [isHovered, setIsHovered] = useState(false);
-
-    return (
-        <Link
-            href="/"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-            style={{
-                fontSize: "1.5rem",
-                fontWeight: 700,
-                letterSpacing: "-0.02em",
-                textTransform: "lowercase",
-                display: "inline-block",
-                marginBottom: "1rem",
-                position: "relative",
-            }}
-        >
-            enfix.
-            <span
-                style={{
-                    position: "absolute",
-                    top: "50%",
-                    left: 0,
-                    width: isHovered ? "100%" : "0%",
-                    height: "2px",
-                    background: "var(--accent)",
-                    transition: "width 0.4s ease",
-                }}
-            />
-        </Link>
-    );
-}
+import LogoLink from "./LogoLink";
+import StrikethroughLink from "./StrikethroughLink";
+import { SOCIAL_LINKS } from "../lib/constants";
 
 export default function Footer() {
     return (
@@ -111,7 +23,9 @@ export default function Footer() {
             >
                 {/* Brand */}
                 <div>
-                    <LogoLink />
+                    <div style={{ marginBottom: "1rem" }}>
+                        <LogoLink />
+                    </div>
                     <p style={{ color: "var(--text-secondary)", fontSize: "0.875rem" }}>
                         We fix what AI couldn&apos;t.
                         <br />
@@ -133,9 +47,15 @@ export default function Footer() {
                         Navigation
                     </p>
                     <nav style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-                        <FooterLink href="/whatwedo">what we do</FooterLink>
-                        <FooterLink href="/howitworks">how it works</FooterLink>
-                        <FooterLink href="/contact">contact</FooterLink>
+                        <StrikethroughLink href="/whatwedo" fontSize="0.9375rem">
+                            what we do
+                        </StrikethroughLink>
+                        <StrikethroughLink href="/howitworks" fontSize="0.9375rem">
+                            how it works
+                        </StrikethroughLink>
+                        <StrikethroughLink href="/contact" fontSize="0.9375rem">
+                            contact
+                        </StrikethroughLink>
                     </nav>
                 </div>
 
@@ -152,9 +72,9 @@ export default function Footer() {
                     >
                         Contact
                     </p>
-                    <FooterLink href="mailto:hello@enfix.dev" external>
+                    <StrikethroughLink href="mailto:hello@enfix.dev" external fontSize="0.9375rem">
                         hello@enfix.dev
-                    </FooterLink>
+                    </StrikethroughLink>
                 </div>
 
                 {/* Social */}
@@ -171,10 +91,15 @@ export default function Footer() {
                         Follow
                     </p>
                     <div style={{ display: "flex", gap: "1.5rem" }}>
-                        {socialLinks.map((link) => (
-                            <FooterLink key={link.label} href={link.href} external>
+                        {SOCIAL_LINKS.map((link) => (
+                            <StrikethroughLink
+                                key={link.label}
+                                href={link.href}
+                                external
+                                fontSize="0.9375rem"
+                            >
                                 {link.label}
-                            </FooterLink>
+                            </StrikethroughLink>
                         ))}
                     </div>
                 </div>
@@ -197,9 +122,9 @@ export default function Footer() {
                 <p style={{ fontSize: "0.875rem", color: "var(--text-secondary)" }}>
                     © {new Date().getFullYear()} EnFix. All rights reserved.
                 </p>
-                <FooterLink href="#top" external>
+                <StrikethroughLink href="#top" fontSize="0.9375rem">
                     Back to top ↑
-                </FooterLink>
+                </StrikethroughLink>
             </div>
         </footer>
     );

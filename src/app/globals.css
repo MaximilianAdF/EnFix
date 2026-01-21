@@ -2,7 +2,6 @@
 
 /* ============================================
    EnFix Design System
-   Inspired by tacto-inc.com aesthetic
    ============================================ */
 
 :root {
@@ -29,11 +28,6 @@
     --transition-fast: 0.2s ease;
     --transition-normal: 0.3s ease;
     --transition-slow: 0.5s ease;
-
-    /* Page Transition (Paper Stack) */
-    --page-freeze-duration: 400ms;
-    --page-slide-duration: 650ms;
-    --page-overlay-color: rgba(180, 175, 165, 0.5);
 }
 
 @theme inline {
@@ -126,35 +120,9 @@ a:hover {
     color: var(--accent);
 }
 
-.link-arrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.link-arrow::after {
-    content: '→';
-    transition: transform var(--transition-fast);
-}
-
-.link-arrow:hover::after {
-    transform: translateX(4px);
-}
-
 /* ============================================
    Layout
    ============================================ */
-
-.container {
-    width: 100%;
-    max-width: var(--content-max-width);
-    margin: 0 auto;
-    padding: 0 clamp(20px, 5vw, 60px);
-}
-
-.section {
-    padding: var(--section-padding) 0;
-}
 
 .divider {
     width: 100%;
@@ -201,43 +169,6 @@ a:hover {
     }
 }
 
-@keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateX(-20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-@keyframes slideUpFromBelow {
-    from {
-        opacity: 0;
-        transform: translateY(100px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Paper slide up - for page transitions */
-@keyframes paperSlideUp {
-    from {
-        transform: translateY(100vh);
-        box-shadow: 0 -10px 60px rgba(0, 0, 0, 0.15);
-    }
-
-    to {
-        transform: translateY(0);
-        box-shadow: 0 0 0 rgba(0, 0, 0, 0);
-    }
-}
-
 @keyframes bounce {
 
     0%,
@@ -255,78 +186,6 @@ a:hover {
     60% {
         transform: translateY(-5px);
     }
-}
-
-@keyframes wordRotate {
-
-    0%,
-    20% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-    25%,
-    95% {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.fade-in {
-    animation: fadeIn 0.6s ease forwards;
-}
-
-.fade-in-up {
-    animation: fadeInUp 0.6s ease forwards;
-}
-
-/* Scroll-triggered animations */
-.reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* Staggered children */
-.stagger-children>* {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
-}
-
-.stagger-children.visible>*:nth-child(1) {
-    transition-delay: 0.1s;
-}
-
-.stagger-children.visible>*:nth-child(2) {
-    transition-delay: 0.2s;
-}
-
-.stagger-children.visible>*:nth-child(3) {
-    transition-delay: 0.3s;
-}
-
-.stagger-children.visible>*:nth-child(4) {
-    transition-delay: 0.4s;
-}
-
-.stagger-children.visible>*:nth-child(5) {
-    transition-delay: 0.5s;
-}
-
-.stagger-children.visible>* {
-    opacity: 1;
-    transform: translateY(0);
 }
 
 /* ============================================
@@ -361,6 +220,55 @@ a:hover {
 .menu-overlay.open {
     opacity: 1;
     visibility: visible;
+}
+
+/* ============================================
+   Form Styles
+   ============================================ */
+
+.form-input {
+    width: 100%;
+    padding: 1.25rem;
+    font-size: 1rem;
+    border: 1px solid var(--text-primary);
+    background: transparent;
+    transition: border-color 0.3s ease;
+    outline: none;
+}
+
+.form-input:focus {
+    border-color: var(--accent);
+}
+
+.form-select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%230A0A0A' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1.25rem center;
+}
+
+.form-textarea {
+    resize: vertical;
+    min-height: 180px;
+    font-family: inherit;
+}
+
+.form-submit {
+    padding: 1.25rem 2rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: transparent;
+    color: var(--text-primary);
+    border: 1px solid var(--text-primary);
+    transition: all 0.3s ease;
+}
+
+.form-submit:hover:not(:disabled) {
+    background: var(--text-primary);
+    color: var(--bg-primary);
 }
 
 /* ============================================
@@ -408,27 +316,9 @@ a:hover {
 }
 
 /* ============================================
-   Scrollbar
+   Scrollbar (Hidden)
    ============================================ */
 
-::-webkit-scrollbar {
-    width: 8px;
-}
-
-::-webkit-scrollbar-track {
-    background: var(--bg-primary);
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--text-light);
-    border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: var(--text-secondary);
-}
-
-/* Hide scrollbar */
 html,
 body {
     scrollbar-width: none;

@@ -3,82 +3,8 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Menu from "./Menu";
-
-interface HeaderLinkProps {
-    href: string;
-    children: React.ReactNode;
-    isAccent?: boolean;
-}
-
-function HeaderLink({ href, children, isAccent = false }: HeaderLinkProps) {
-    const [isHovered, setIsHovered] = useState(false);
-
-    return (
-        <Link
-            href={href}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-            style={{
-                fontSize: "0.875rem",
-                fontWeight: 500,
-                textTransform: "uppercase",
-                letterSpacing: "0.05em",
-                color: isAccent ? "var(--accent)" : "inherit",
-                position: "relative",
-                display: "inline-block",
-            }}
-        >
-            {children}
-            {/* Strikethrough line */}
-            <span
-                style={{
-                    position: "absolute",
-                    top: "50%",
-                    left: 0,
-                    width: isHovered ? "100%" : "0%",
-                    height: "1px",
-                    background: isAccent ? "var(--accent)" : "var(--text-primary)",
-                    transition: "width 0.4s ease",
-                    transformOrigin: "left",
-                }}
-            />
-        </Link>
-    );
-}
-
-// Logo with strikethrough hover
-function LogoLink() {
-    const [isHovered, setIsHovered] = useState(false);
-
-    return (
-        <Link
-            href="/"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-            style={{
-                fontSize: "1.5rem",
-                fontWeight: 700,
-                letterSpacing: "-0.02em",
-                textTransform: "lowercase",
-                position: "relative",
-                display: "inline-block",
-            }}
-        >
-            enfix.
-            <span
-                style={{
-                    position: "absolute",
-                    top: "50%",
-                    left: 0,
-                    width: isHovered ? "100%" : "0%",
-                    height: "2px",
-                    background: "var(--accent)",
-                    transition: "width 0.4s ease",
-                }}
-            />
-        </Link>
-    );
-}
+import LogoLink from "./LogoLink";
+import StrikethroughLink from "./StrikethroughLink";
 
 export default function Header() {
     const [isScrolled, setIsScrolled] = useState(false);
@@ -126,10 +52,19 @@ export default function Header() {
                 {/* Logo */}
                 <LogoLink />
 
-                {/* Center - Contact (Blue with strikethrough) */}
-                <HeaderLink href="/contact" isAccent>
+                {/* Center - Contact */}
+                <StrikethroughLink
+                    href="/contact"
+                    color="var(--accent)"
+                    lineColor="var(--accent)"
+                    fontSize="0.875rem"
+                    style={{
+                        textTransform: "uppercase",
+                        letterSpacing: "0.05em",
+                    }}
+                >
                     Contact
-                </HeaderLink>
+                </StrikethroughLink>
 
                 {/* Menu Toggle */}
                 <button
@@ -152,7 +87,6 @@ export default function Header() {
                     }}
                 >
                     Menu
-                    {/* Strikethrough on hover */}
                     <span
                         style={{
                             position: "absolute",

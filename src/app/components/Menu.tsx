@@ -2,6 +2,9 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import StrikethroughLink from "./StrikethroughLink";
+import EmailLink from "./EmailLink";
+import { NAV_LINKS, SOCIAL_LINKS } from "../lib/constants";
 
 interface MenuProps {
     isOpen: boolean;
@@ -36,7 +39,6 @@ function MenuNavLink({ href, label, onClick, isOpen, index }: MenuLinkProps) {
             }}
         >
             {label}
-            {/* Strikethrough on hover */}
             <span
                 style={{
                     position: "absolute",
@@ -51,86 +53,6 @@ function MenuNavLink({ href, label, onClick, isOpen, index }: MenuLinkProps) {
         </Link>
     );
 }
-
-function SocialLink({ href, label }: { href: string; label: string }) {
-    const [isHovered, setIsHovered] = useState(false);
-
-    return (
-        <a
-            href={href}
-            target="_blank"
-            rel="noopener noreferrer"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-            style={{
-                fontSize: "0.875rem",
-                fontWeight: 500,
-                position: "relative",
-            }}
-        >
-            {label}
-            {/* Strikethrough on hover */}
-            <span
-                style={{
-                    position: "absolute",
-                    top: "50%",
-                    left: 0,
-                    width: isHovered ? "100%" : "0%",
-                    height: "1px",
-                    background: "var(--text-primary)",
-                    transition: "width 0.4s ease",
-                }}
-            />
-        </a>
-    );
-}
-
-// Email link with strikethrough hover
-function EmailLink() {
-    const [isHovered, setIsHovered] = useState(false);
-
-    return (
-        <a
-            href="mailto:hello@enfix.dev"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-            style={{
-                fontSize: "1.5rem",
-                fontWeight: 500,
-                display: "inline-block",
-                color: "var(--accent)",
-                position: "relative",
-            }}
-        >
-            hello@enfix.dev
-            {/* Strikethrough on hover */}
-            <span
-                style={{
-                    position: "absolute",
-                    top: "50%",
-                    left: 0,
-                    width: isHovered ? "100%" : "0%",
-                    height: "2px",
-                    background: "var(--accent)",
-                    transition: "width 0.4s ease",
-                }}
-            />
-        </a>
-    );
-}
-
-const navLinks = [
-    { href: "/", label: "home" },
-    { href: "/whatwedo", label: "what we do" },
-    { href: "/howitworks", label: "how it works" },
-    { href: "/contact", label: "contact" },
-];
-
-const socialLinks = [
-    { href: "https://github.com/enfix", label: "GitHub" },
-    { href: "https://linkedin.com/company/enfix", label: "LinkedIn" },
-    { href: "https://twitter.com/enfix_dev", label: "X" },
-];
 
 export default function Menu({ isOpen, onClose }: MenuProps) {
     const [isCloseHovered, setIsCloseHovered] = useState(false);
@@ -189,7 +111,6 @@ export default function Menu({ isOpen, onClose }: MenuProps) {
                 >
                     <span style={{ position: "relative" }}>
                         (×) close
-                        {/* Strikethrough on hover */}
                         <span
                             style={{
                                 position: "absolute",
@@ -228,8 +149,8 @@ export default function Menu({ isOpen, onClose }: MenuProps) {
                     >
                         Get in touch
                     </p>
-                    <EmailLink />
-                    
+                    <EmailLink large />
+
                     <div style={{ marginTop: "2rem" }}>
                         <p
                             style={{
@@ -243,8 +164,16 @@ export default function Menu({ isOpen, onClose }: MenuProps) {
                             Follow us
                         </p>
                         <div style={{ display: "flex", gap: "1.5rem" }}>
-                            {socialLinks.map((link) => (
-                                <SocialLink key={link.label} href={link.href} label={link.label} />
+                            {SOCIAL_LINKS.map((link) => (
+                                <StrikethroughLink
+                                    key={link.label}
+                                    href={link.href}
+                                    external
+                                    fontSize="0.875rem"
+                                    lineColor="var(--text-primary)"
+                                >
+                                    {link.label}
+                                </StrikethroughLink>
                             ))}
                         </div>
                     </div>
@@ -262,7 +191,7 @@ export default function Menu({ isOpen, onClose }: MenuProps) {
                     alignItems: "flex-end",
                 }}
             >
-                {navLinks.map((link, index) => (
+                {NAV_LINKS.map((link, index) => (
                     <MenuNavLink
                         key={link.href}
                         href={link.href}
