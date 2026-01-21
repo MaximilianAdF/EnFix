@@ -235,7 +235,7 @@ export default function Home() {
       <div className="divider" style={{ margin: "0 clamp(20px, 5vw, 60px)" }} />
 
       {/* Navigation Sections */}
-      <section style={{ padding: "var(--section-padding) clamp(20px, 5vw, 60px)" }}>
+      <section style={{ padding: "0 clamp(20px, 5vw, 60px)" }}>
         <div style={{ maxWidth: "var(--content-max-width)", margin: "0 auto" }}>
           {navSections.map((section, index) => (
             <FadeIn key={section.href} delay={index * 100}>
@@ -254,6 +254,7 @@ export default function Home() {
         style={{
           padding: "var(--section-padding) clamp(20px, 5vw, 60px)",
           background: "var(--bg-secondary)",
+          marginTop: "3rem",
         }}
       >
         <div style={{ maxWidth: "var(--content-max-width)", margin: "0 auto" }}>
@@ -338,7 +339,12 @@ export default function Home() {
                     alignItems: "flex-start",
                   }}
                 >
-                  <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
+                  <div style={{ 
+                    display: "flex", 
+                    gap: "1rem", 
+                    alignItems: "center",
+                    minWidth: "140px",
+                  }}>
                     <span className="text-small" style={{ whiteSpace: "nowrap" }}>
                       {item.date}
                     </span>

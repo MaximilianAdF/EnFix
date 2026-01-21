@@ -144,19 +144,21 @@ export default function Header() {
                         background: "none",
                         border: "none",
                         cursor: "pointer",
-                        color: isMenuOpen ? "var(--accent)" : "inherit",
-                        transition: "color 0.3s ease",
+                        color: "inherit",
+                        transition: "color 0.3s ease, opacity 0.3s ease",
                         position: "relative",
+                        opacity: isMenuOpen ? 0 : 1,
+                        pointerEvents: isMenuOpen ? "none" : "auto",
                     }}
                 >
-                    {isMenuOpen ? "Close" : "Menu"}
+                    Menu
                     {/* Strikethrough on hover */}
                     <span
                         style={{
                             position: "absolute",
                             top: "50%",
                             left: 0,
-                            width: isMenuHovered && !isMenuOpen ? "100%" : "0%",
+                            width: isMenuHovered ? "100%" : "0%",
                             height: "1px",
                             background: "var(--text-primary)",
                             transition: "width 0.4s ease",

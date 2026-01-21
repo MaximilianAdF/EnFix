@@ -27,7 +27,7 @@ function MenuNavLink({ href, label, onClick, isOpen, index }: MenuLinkProps) {
             onMouseLeave={() => setIsHovered(false)}
             className="nav-link-large"
             style={{
-                marginBottom: "1.5rem",
+                marginBottom: "1rem",
                 opacity: isOpen ? 1 : 0,
                 transform: isOpen ? "translateX(0)" : "translateX(20px)",
                 transition: `opacity 0.5s ease ${index * 0.12}s, transform 0.5s ease ${index * 0.12}s`,
@@ -85,8 +85,42 @@ function SocialLink({ href, label }: { href: string; label: string }) {
     );
 }
 
+// Email link with strikethrough hover
+function EmailLink() {
+    const [isHovered, setIsHovered] = useState(false);
+
+    return (
+        <a
+            href="mailto:hello@enfix.dev"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            style={{
+                fontSize: "1.5rem",
+                fontWeight: 500,
+                display: "inline-block",
+                color: "var(--accent)",
+                position: "relative",
+            }}
+        >
+            hello@enfix.dev
+            {/* Strikethrough on hover */}
+            <span
+                style={{
+                    position: "absolute",
+                    top: "50%",
+                    left: 0,
+                    width: isHovered ? "100%" : "0%",
+                    height: "2px",
+                    background: "var(--accent)",
+                    transition: "width 0.4s ease",
+                }}
+            />
+        </a>
+    );
+}
+
 const navLinks = [
-    { href: "/", label: "Home" },
+    { href: "/", label: "home" },
     { href: "/whatwedo", label: "what we do" },
     { href: "/howitworks", label: "how it works" },
     { href: "/contact", label: "contact" },
@@ -109,49 +143,69 @@ export default function Menu({ isOpen, onClose }: MenuProps) {
                 flexDirection: "row",
             }}
         >
-            {/* Close Button (×) in top right */}
-            <button
-                onClick={onClose}
-                onMouseEnter={() => setIsCloseHovered(true)}
-                onMouseLeave={() => setIsCloseHovered(false)}
+            {/* Header bar with enfix. and close button */}
+            <div
                 style={{
                     position: "absolute",
                     top: 0,
+                    left: 0,
                     right: 0,
                     height: "var(--header-height)",
-                    padding: "0 clamp(20px, 5vw, 60px)",
                     display: "flex",
                     alignItems: "center",
-                    background: "none",
-                    border: "none",
-                    cursor: "pointer",
-                    fontSize: "0.875rem",
-                    fontWeight: 500,
-                    textTransform: "lowercase",
-                    letterSpacing: "0.05em",
-                    color: isCloseHovered ? "var(--accent)" : "var(--text-primary)",
-                    transition: "color 0.3s ease",
+                    justifyContent: "space-between",
+                    padding: "0 clamp(20px, 5vw, 60px)",
                     zIndex: 101,
                 }}
             >
-                <span style={{ position: "relative" }}>
-                    (×) close
-                    {/* Strikethrough on hover */}
-                    <span
-                        style={{
-                            position: "absolute",
-                            top: "50%",
-                            left: 0,
-                            width: isCloseHovered ? "100%" : "0%",
-                            height: "1px",
-                            background: "var(--accent)",
-                            transition: "width 0.4s ease",
-                        }}
-                    />
+                {/* enfix. logo on left */}
+                <span
+                    style={{
+                        fontSize: "1.5rem",
+                        fontWeight: 700,
+                        letterSpacing: "-0.02em",
+                        textTransform: "lowercase",
+                    }}
+                >
+                    enfix.
                 </span>
-            </button>
 
-            {/* Left Side - Info */}
+                {/* Close button on right */}
+                <button
+                    onClick={onClose}
+                    onMouseEnter={() => setIsCloseHovered(true)}
+                    onMouseLeave={() => setIsCloseHovered(false)}
+                    style={{
+                        background: "none",
+                        border: "none",
+                        cursor: "pointer",
+                        fontSize: "0.875rem",
+                        fontWeight: 500,
+                        textTransform: "lowercase",
+                        letterSpacing: "0.05em",
+                        color: isCloseHovered ? "var(--accent)" : "var(--text-primary)",
+                        transition: "color 0.3s ease",
+                    }}
+                >
+                    <span style={{ position: "relative" }}>
+                        (×) close
+                        {/* Strikethrough on hover */}
+                        <span
+                            style={{
+                                position: "absolute",
+                                top: "50%",
+                                left: 0,
+                                width: isCloseHovered ? "100%" : "0%",
+                                height: "1px",
+                                background: "var(--accent)",
+                                transition: "width 0.4s ease",
+                            }}
+                        />
+                    </span>
+                </button>
+            </div>
+
+            {/* Left Side - Contact Info */}
             <div
                 style={{
                     flex: 1,
@@ -161,6 +215,7 @@ export default function Menu({ isOpen, onClose }: MenuProps) {
                     justifyContent: "center",
                 }}
             >
+                {/* Contact Info */}
                 <div>
                     <p
                         style={{
@@ -173,20 +228,9 @@ export default function Menu({ isOpen, onClose }: MenuProps) {
                     >
                         Get in touch
                     </p>
-                    <a
-                        href="mailto:hello@enfix.dev"
-                        style={{
-                            fontSize: "1.5rem",
-                            fontWeight: 500,
-                            display: "block",
-                            marginBottom: "0.5rem",
-                            color: "var(--accent)",
-                        }}
-                    >
-                        hello@enfix.dev
-                    </a>
+                    <EmailLink />
                     
-                    <div style={{ marginTop: "3rem" }}>
+                    <div style={{ marginTop: "2rem" }}>
                         <p
                             style={{
                                 fontSize: "0.875rem",
@@ -207,7 +251,7 @@ export default function Menu({ isOpen, onClose }: MenuProps) {
                 </div>
             </div>
 
-            {/* Right Side - Navigation */}
+            {/* Right Side - Navigation (centered) */}
             <nav
                 style={{
                     flex: 1,

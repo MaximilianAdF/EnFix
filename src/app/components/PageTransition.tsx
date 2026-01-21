@@ -9,8 +9,8 @@ interface PageTransitionProps {
 
 export default function PageTransition({ children }: PageTransitionProps) {
     const pathname = usePathname();
-    const [phase, setPhase] = useState<"idle" | "exit" | "enter">("idle");
     const [displayChildren, setDisplayChildren] = useState(children);
+    const [transitionStage, setTransitionStage] = useState<"idle" | "exit" | "enter">("idle");
     const isFirstRender = useRef(true);
 
     useEffect(() => {
@@ -21,35 +21,43 @@ export default function PageTransition({ children }: PageTransitionProps) {
             return;
         }
 
-        // Phase 1: Exit - old content fades out
-        setPhase("exit");
+        // Start exit animation - fade out current page
+        setTransitionStage("exit");
 
         const exitTimer = setTimeout(() => {
-            // Update to new content
+            // Swap to new content
             setDisplayChildren(children);
-            // Phase 2: Enter - new content slides up from below
-            setPhase("enter");
 
-            const enterTimer = setTimeout(() => {
-                setPhase("idle");
-            }, 600);
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: "instant" });
 
-            return () => clearTimeout(enterTimer);
-        }, 300);
+            // Small delay then start enter animation
+            requestAnimationFrame(() => {
+                setTransitionStage("enter");
+
+                // Reset to idle after enter completes
+                setTimeout(() => {
+                    setTransitionStage("idle");
+                }, 400);
+            });
+        }, 250);
 
         return () => clearTimeout(exitTimer);
     }, [pathname, children]);
 
     const getStyles = (): React.CSSProperties => {
-        switch (phase) {
+        switch (transitionStage) {
             case "exit":
                 return {
                     opacity: 0,
-                    transition: "opacity 0.3s ease",
+                    transform: "translateY(-10px)",
+                    transition: "opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1), transform 0.25s cubic-bezier(0.4, 0, 0.2, 1)",
                 };
             case "enter":
                 return {
-                    animation: "slideUpFromBelow 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards",
+                    opacity: 1,
+                    transform: "translateY(0)",
+                    transition: "opacity 0.4s cubic-bezier(0.0, 0, 0.2, 1), transform 0.4s cubic-bezier(0.0, 0, 0.2, 1)",
                 };
             default:
                 return {
