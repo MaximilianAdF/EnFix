@@ -5,7 +5,9 @@ import Link from "next/link";
 import StrikethroughLink from "./StrikethroughLink";
 import EmailLink from "./EmailLink";
 import SectionLabel from "./SectionLabel";
+import LogoLink from "./LogoLink";
 import { NAV_LINKS, SOCIAL_LINKS } from "../lib/constants";
+import { useIsMobile } from "../hooks/useIsMobile";
 
 interface MenuProps {
     isOpen: boolean;
@@ -18,9 +20,10 @@ interface MenuLinkProps {
     onClick: () => void;
     isOpen: boolean;
     index: number;
+    isMobile?: boolean;
 }
 
-function MenuNavLink({ href, label, onClick, isOpen, index }: MenuLinkProps) {
+function MenuNavLink({ href, label, onClick, isOpen, index, isMobile }: MenuLinkProps) {
     const [isHovered, setIsHovered] = useState(false);
 
     return (
@@ -36,7 +39,9 @@ function MenuNavLink({ href, label, onClick, isOpen, index }: MenuLinkProps) {
                 transform: isOpen ? "translateX(0)" : "translateX(20px)",
                 transition: `opacity 0.5s ease ${index * 0.12}s, transform 0.5s ease ${index * 0.12}s`,
                 position: "relative",
-                display: "inline-block",
+                display: isMobile ? "block" : "inline-block",
+                width: isMobile ? "100%" : "auto",
+                padding: isMobile ? "0.5rem 0" : undefined,
             }}
         >
             {label}
@@ -57,13 +62,14 @@ function MenuNavLink({ href, label, onClick, isOpen, index }: MenuLinkProps) {
 
 export default function Menu({ isOpen, onClose }: MenuProps) {
     const [isCloseHovered, setIsCloseHovered] = useState(false);
+    const isMobile = useIsMobile();
 
     return (
         <div
             className={`menu-overlay ${isOpen ? "open" : ""}`}
             style={{
                 display: "flex",
-                flexDirection: "row",
+                flexDirection: isMobile ? "column" : "row",
             }}
         >
             {/* Header bar with enfix. and close button */}
@@ -81,19 +87,10 @@ export default function Menu({ isOpen, onClose }: MenuProps) {
                     zIndex: 101,
                 }}
             >
-                {/* enfix. logo on left */}
-                <span
-                    style={{
-                        fontSize: "1.5rem",
-                        fontWeight: 700,
-                        letterSpacing: "-0.02em",
-                        textTransform: "lowercase",
-                    }}
-                >
-                    enfix.
-                </span>
+                {/* enfix. logo on left - using LogoLink for consistency */}
+                <LogoLink />
 
-                {/* Close button on right */}
+                {/* Close button on right - larger tap target on mobile */}
                 <button
                     onClick={onClose}
                     onMouseEnter={() => setIsCloseHovered(true)}
@@ -102,12 +99,14 @@ export default function Menu({ isOpen, onClose }: MenuProps) {
                         background: "none",
                         border: "none",
                         cursor: "pointer",
-                        fontSize: "0.875rem",
+                        fontSize: isMobile ? "1rem" : "0.875rem",
                         fontWeight: 500,
                         textTransform: "lowercase",
                         letterSpacing: "0.05em",
                         color: isCloseHovered ? "var(--accent)" : "var(--text-primary)",
                         transition: "color 0.3s ease",
+                        padding: isMobile ? "12px" : undefined,
+                        margin: isMobile ? "-12px" : undefined,
                     }}
                 >
                     <span style={{ position: "relative" }}>
@@ -127,62 +126,134 @@ export default function Menu({ isOpen, onClose }: MenuProps) {
                 </button>
             </div>
 
-            {/* Left Side - Contact Info */}
-            <div
-                style={{
-                    flex: 1,
-                    padding: "var(--header-height) clamp(20px, 5vw, 60px) 60px",
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                }}
-            >
-                {/* Contact Info */}
-                <div>
-                    <SectionLabel>Get in touch</SectionLabel>
-                    <EmailLink large />
-
-                    <div style={{ marginTop: "2rem" }}>
-                        <SectionLabel>Follow us</SectionLabel>
-                        <div style={{ display: "flex", gap: "1.5rem" }}>
-                            {SOCIAL_LINKS.map((link) => (
+            {/* Navigation - First on mobile for better UX */}
+            {isMobile && (
+                <nav
+                    style={{
+                        flex: 1,
+                        marginTop: "var(--header-height)",
+                        paddingInline: "clamp(20px, 5vw, 60px)",
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: "0.5rem",
+                    }}
+                >
+                    {NAV_LINKS.map((link, index) => (
+                        <MenuNavLink
+                            key={link.href}
+                            href={link.href}
+                            label={link.label}
+                            onClick={onClose}
+                            isOpen={isOpen}
+                            index={index}
+                            isMobile={isMobile}
+                        />
+                    ))}
+                    
+                    {/* Compact contact info */}
+                    <div
+                        style={{
+                            marginTop: "2rem",
+                            display: "flex",
+                            flexDirection: "row",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            gap: "1rem",
+                            flexWrap: "wrap",
+                            fontSize: "0.75rem",
+                            color: "var(--text-secondary)",
+                        }}
+                    >
+                        <StrikethroughLink
+                            href="mailto:hello@enfix.dev"
+                            external
+                            fontSize="0.75rem"
+                            lineColor="var(--text-secondary)"
+                            color="var(--text-secondary)"
+                        >
+                            hello@enfix.dev
+                        </StrikethroughLink>
+                        <span style={{ color: "var(--border)" }}>·</span>
+                        {SOCIAL_LINKS.map((link, index) => (
+                            <span key={link.label} style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
                                 <StrikethroughLink
-                                    key={link.label}
                                     href={link.href}
                                     external
-                                    fontSize="0.875rem"
-                                    lineColor="var(--text-primary)"
+                                    fontSize="0.75rem"
+                                    lineColor="var(--text-secondary)"
+                                    color="var(--text-secondary)"
                                 >
                                     {link.label}
                                 </StrikethroughLink>
-                            ))}
+                                {index < SOCIAL_LINKS.length - 1 && <span style={{ color: "var(--border)" }}>·</span>}
+                            </span>
+                        ))}
+                    </div>
+                </nav>
+            )}
+
+            {/* Contact Info - Desktop only */}
+            {!isMobile && (
+                <div
+                    style={{
+                        flex: 1,
+                        padding: "var(--header-height) clamp(20px, 5vw, 60px) 60px",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                    }}
+                >
+                    <div>
+                        <SectionLabel>Get in touch</SectionLabel>
+                        <EmailLink large />
+
+                        <div style={{ marginTop: "2rem" }}>
+                            <SectionLabel>Follow us</SectionLabel>
+                            <div style={{ display: "flex", gap: "1.5rem", flexWrap: "wrap" }}>
+                                {SOCIAL_LINKS.map((link) => (
+                                    <StrikethroughLink
+                                        key={link.label}
+                                        href={link.href}
+                                        external
+                                        fontSize="0.875rem"
+                                        lineColor="var(--text-primary)"
+                                    >
+                                        {link.label}
+                                    </StrikethroughLink>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            )}
 
-            {/* Right Side - Navigation (centered) */}
-            <nav
-                style={{
-                    flex: 1,
-                    padding: "var(--header-height) clamp(20px, 5vw, 60px) 60px",
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    alignItems: "flex-end",
-                }}
-            >
-                {NAV_LINKS.map((link, index) => (
-                    <MenuNavLink
-                        key={link.href}
-                        href={link.href}
-                        label={link.label}
-                        onClick={onClose}
-                        isOpen={isOpen}
-                        index={index}
-                    />
-                ))}
-            </nav>
+            {/* Navigation - Desktop only (right side) */}
+            {!isMobile && (
+                <nav
+                    style={{
+                        flex: 1,
+                        padding: "var(--header-height) clamp(20px, 5vw, 60px) 60px",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "flex-end",
+                    }}
+                >
+                    {NAV_LINKS.map((link, index) => (
+                        <MenuNavLink
+                            key={link.href}
+                            href={link.href}
+                            label={link.label}
+                            onClick={onClose}
+                            isOpen={isOpen}
+                            index={index}
+                            isMobile={false}
+                        />
+                    ))}
+                </nav>
+            )}
         </div>
     );
 }
