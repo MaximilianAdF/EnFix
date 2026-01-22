@@ -4,10 +4,12 @@ import { useState, useEffect } from "react";
 import Menu from "./Menu";
 import LogoLink from "./LogoLink";
 import StrikethroughLink from "./StrikethroughLink";
+import { useIsMobile } from "../hooks/useIsMobile";
 
 export default function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isMenuHovered, setIsMenuHovered] = useState(false);
+    const isMobile = useIsMobile();
 
     useEffect(() => {
         if (isMenuOpen) {
@@ -38,22 +40,24 @@ export default function Header() {
                 {/* Logo */}
                 <LogoLink />
 
-                {/* Center - Contact */}
-                <StrikethroughLink
-                    href="/contact"
-                    color="var(--accent)"
-                    lineColor="var(--accent)"
-                    fontSize="0.875rem"
-                    style={{
-                        textTransform: "uppercase",
-                        letterSpacing: "0.05em",
-                        position: "absolute",
-                        left: "50%",
-                        transform: "translateX(-50%)",
-                    }}
-                >
-                    Contact
-                </StrikethroughLink>
+                {/* Center - Contact (hidden on mobile) */}
+                {isMobile === false && (
+                    <StrikethroughLink
+                        href="/contact"
+                        color="var(--accent)"
+                        lineColor="var(--accent)"
+                        fontSize="0.875rem"
+                        style={{
+                            textTransform: "uppercase",
+                            letterSpacing: "0.05em",
+                            position: "absolute",
+                            left: "50%",
+                            transform: "translateX(-50%)",
+                        }}
+                    >
+                        Contact
+                    </StrikethroughLink>
+                )}
 
                 {/* Menu Toggle */}
                 <button
