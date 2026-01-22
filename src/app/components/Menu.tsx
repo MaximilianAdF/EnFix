@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import StrikethroughLink from "./StrikethroughLink";
 import EmailLink from "./EmailLink";
+import SectionLabel from "./SectionLabel";
 import { NAV_LINKS, SOCIAL_LINKS } from "../lib/constants";
 
 interface MenuProps {
@@ -76,7 +77,7 @@ export default function Menu({ isOpen, onClose }: MenuProps) {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "space-between",
-                    padding: "0 clamp(20px, 5vw, 60px)",
+                    paddingInline: "var(--page-padding-x)",
                     zIndex: 101,
                 }}
             >
@@ -130,7 +131,8 @@ export default function Menu({ isOpen, onClose }: MenuProps) {
             <div
                 style={{
                     flex: 1,
-                    padding: "var(--header-height) clamp(20px, 5vw, 60px) 60px",
+                    padding: "var(--header-height) 0 60px",
+                    paddingInline: "var(--page-padding-x)",
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "center",
@@ -138,31 +140,11 @@ export default function Menu({ isOpen, onClose }: MenuProps) {
             >
                 {/* Contact Info */}
                 <div>
-                    <p
-                        style={{
-                            fontSize: "0.875rem",
-                            color: "var(--text-secondary)",
-                            marginBottom: "1rem",
-                            textTransform: "uppercase",
-                            letterSpacing: "0.1em",
-                        }}
-                    >
-                        Get in touch
-                    </p>
+                    <SectionLabel>Get in touch</SectionLabel>
                     <EmailLink large />
 
                     <div style={{ marginTop: "2rem" }}>
-                        <p
-                            style={{
-                                fontSize: "0.875rem",
-                                color: "var(--text-secondary)",
-                                marginBottom: "1rem",
-                                textTransform: "uppercase",
-                                letterSpacing: "0.1em",
-                            }}
-                        >
-                            Follow us
-                        </p>
+                        <SectionLabel>Follow us</SectionLabel>
                         <div style={{ display: "flex", gap: "1.5rem" }}>
                             {SOCIAL_LINKS.map((link) => (
                                 <StrikethroughLink
@@ -184,7 +166,8 @@ export default function Menu({ isOpen, onClose }: MenuProps) {
             <nav
                 style={{
                     flex: 1,
-                    padding: "var(--header-height) clamp(20px, 5vw, 60px) 60px",
+                    padding: "var(--header-height) 0 60px",
+                    paddingInline: "var(--page-padding-x)",
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "center",

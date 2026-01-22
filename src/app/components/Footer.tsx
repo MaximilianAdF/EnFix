@@ -2,13 +2,16 @@
 
 import LogoLink from "./LogoLink";
 import StrikethroughLink from "./StrikethroughLink";
+import SectionLabel from "./SectionLabel";
 import { SOCIAL_LINKS } from "../lib/constants";
 
 export default function Footer() {
     return (
         <footer
             style={{
-                padding: "80px clamp(20px, 5vw, 60px)",
+                paddingTop: "80px",
+                paddingBottom: "80px",
+                paddingInline: "var(--page-padding-x)",
                 borderTop: "1px solid var(--border)",
             }}
         >
@@ -35,17 +38,7 @@ export default function Footer() {
 
                 {/* Navigation */}
                 <div>
-                    <p
-                        style={{
-                            fontSize: "0.875rem",
-                            color: "var(--text-secondary)",
-                            marginBottom: "1rem",
-                            textTransform: "uppercase",
-                            letterSpacing: "0.05em",
-                        }}
-                    >
-                        Navigation
-                    </p>
+                    <SectionLabel>Navigation</SectionLabel>
                     <nav style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
                         <StrikethroughLink href="/whatwedo" fontSize="0.9375rem">
                             what we do
@@ -61,17 +54,7 @@ export default function Footer() {
 
                 {/* Contact */}
                 <div>
-                    <p
-                        style={{
-                            fontSize: "0.875rem",
-                            color: "var(--text-secondary)",
-                            marginBottom: "1rem",
-                            textTransform: "uppercase",
-                            letterSpacing: "0.05em",
-                        }}
-                    >
-                        Contact
-                    </p>
+                    <SectionLabel>Contact</SectionLabel>
                     <StrikethroughLink href="mailto:hello@enfix.dev" external fontSize="0.9375rem">
                         hello@enfix.dev
                     </StrikethroughLink>
@@ -79,17 +62,7 @@ export default function Footer() {
 
                 {/* Social */}
                 <div>
-                    <p
-                        style={{
-                            fontSize: "0.875rem",
-                            color: "var(--text-secondary)",
-                            marginBottom: "1rem",
-                            textTransform: "uppercase",
-                            letterSpacing: "0.05em",
-                        }}
-                    >
-                        Follow
-                    </p>
+                    <SectionLabel>Follow</SectionLabel>
                     <div style={{ display: "flex", gap: "1.5rem" }}>
                         {SOCIAL_LINKS.map((link) => (
                             <StrikethroughLink

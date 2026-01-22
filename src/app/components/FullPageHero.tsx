@@ -1,7 +1,8 @@
 "use client";
 
-import { ReactNode, useState, useEffect } from "react";
+import { ReactNode } from "react";
 import TypeWriter from "./TypeWriter";
+import ScrollIndicator from "./ScrollIndicator";
 
 interface FullPageHeroProps {
     title: string;
@@ -16,17 +17,6 @@ export default function FullPageHero({
     children,
     showScrollIndicator = true,
 }: FullPageHeroProps) {
-    const [hasScrolled, setHasScrolled] = useState(false);
-
-    useEffect(() => {
-        const handleScroll = () => {
-            setHasScrolled(window.scrollY > 50);
-        };
-
-        window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
-    }, []);
-
     return (
         <section
             style={{
@@ -35,7 +25,10 @@ export default function FullPageHero({
                 flexDirection: "column",
                 justifyContent: "flex-start", // Align to top like Tacto
                 alignItems: "flex-start",
-                padding: "calc(var(--header-height) + 100px) clamp(20px, 5vw, 60px) 60px",
+                paddingTop: "calc(var(--header-height) + 100px)",
+                paddingLeft: "var(--page-padding-x)",
+                paddingRight: "var(--page-padding-x)",
+                paddingBottom: "60px",
                 position: "relative",
             }}
         >
@@ -63,32 +56,8 @@ export default function FullPageHero({
             </div>
 
             {/* Scroll Indicator - fades out on scroll */}
-            {showScrollIndicator && (
-                <div
-                    style={{
-                        position: "absolute",
-                        bottom: "40px",
-                        left: "50%",
-                        transform: `translateX(-50%) translateY(${hasScrolled ? "10px" : "0"})`,
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                        gap: "0.5rem",
-                        color: "var(--text-light)",
-                        opacity: hasScrolled ? 0 : 0.6,
-                        transition: "opacity 0.5s ease, transform 0.5s ease",
-                        pointerEvents: "none",
-                    }}
-                >
-                    <span style={{ fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.1em" }}>
-                        Scroll
-                    </span>
-                    <span style={{ 
-                        fontSize: "1.25rem",
-                        animation: hasScrolled ? "none" : "bounce 2s infinite",
-                    }}>↓</span>
-                </div>
-            )}
+            <ScrollIndicator show={showScrollIndicator} />
         </section>
     );
 }
+

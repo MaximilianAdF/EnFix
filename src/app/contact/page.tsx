@@ -55,7 +55,9 @@ export default function Contact() {
                     minHeight: "100vh",
                     display: "flex",
                     alignItems: "center",
-                    padding: "var(--section-padding) clamp(20px, 5vw, 60px)",
+                    paddingTop: "var(--section-padding)",
+                    paddingBottom: "var(--section-padding)",
+                    paddingInline: "var(--page-padding-x)",
                     borderTop: "1px solid var(--border)",
                 }}
             >
