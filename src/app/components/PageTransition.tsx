@@ -23,13 +23,13 @@ export default function PageTransition({ children }: PageTransitionProps) {
     // Track scroll position continuously
     useEffect(() => {
         if (typeof window === "undefined") return;
-        
+
         const updateScroll = () => {
             if (stage === "idle") {
                 currentScrollYRef.current = window.scrollY || 0;
             }
         };
-        
+
         updateScroll();
         window.addEventListener("scroll", updateScroll, { passive: true });
         return () => window.removeEventListener("scroll", updateScroll);
@@ -43,10 +43,10 @@ export default function PageTransition({ children }: PageTransitionProps) {
             const target = e.target as HTMLElement;
             const link = target.closest("a");
             if (!link) return;
-            
+
             const href = link.getAttribute("href");
             if (!href || href.startsWith("http") || href.startsWith("#") || href === pathname) return;
-            
+
             // Capture current DOM as HTML snapshot before navigation
             if (contentRef.current) {
                 setSnapshotHTML(contentRef.current.innerHTML);
@@ -63,11 +63,11 @@ export default function PageTransition({ children }: PageTransitionProps) {
         if (pathname !== prevPathnameRef.current && snapshotHTML !== null) {
             // Start darken phase
             setStage("darken");
-            
+
             // Clear any existing timers
             timeoutsRef.current.forEach((id) => clearTimeout(id));
             timeoutsRef.current = [];
-            
+
             // After darken, start enter phase
             const enterTimer = window.setTimeout(() => {
                 if (typeof window !== "undefined") {
@@ -75,20 +75,20 @@ export default function PageTransition({ children }: PageTransitionProps) {
                 }
                 setStage("enter");
             }, DARKEN_DURATION);
-            
+
             // After enter animation completes, cleanup
             const cleanupTimer = window.setTimeout(() => {
                 setStage("idle");
                 setSnapshotHTML(null);
             }, DARKEN_DURATION + ENTER_DURATION);
-            
+
             timeoutsRef.current.push(enterTimer, cleanupTimer);
             prevPathnameRef.current = pathname;
         } else if (pathname !== prevPathnameRef.current) {
             // No snapshot (direct navigation, refresh, etc.) - just update
             prevPathnameRef.current = pathname;
         }
-        
+
         return () => {
             timeoutsRef.current.forEach((id) => clearTimeout(id));
         };
@@ -115,7 +115,7 @@ export default function PageTransition({ children }: PageTransitionProps) {
                         pointerEvents: "none",
                     }}
                 >
-                    <div 
+                    <div
                         style={{ transform: `translateY(-${snapshotScrollY}px)` }}
                         dangerouslySetInnerHTML={{ __html: snapshotHTML }}
                     />
@@ -131,7 +131,7 @@ export default function PageTransition({ children }: PageTransitionProps) {
                     />
                 </div>
             )}
-            
+
             {/* Current/New page (slides up from bottom) */}
             <div
                 ref={contentRef}
@@ -149,7 +149,7 @@ export default function PageTransition({ children }: PageTransitionProps) {
                             ? "translateY(0)"
                             : stage === "darken"
                                 ? "translateY(100vh)"
-                                : "translateY(0)",
+                                : "none",
                     opacity: stage === "darken" ? 0 : 1,
                     pointerEvents: stage === "idle" ? "auto" : "none",
                     transition:

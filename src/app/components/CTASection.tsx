@@ -28,7 +28,7 @@ export default function CTASection({
                 color: "white",
             }}
         >
-            <div style={{ textAlign: "center", maxWidth: "600px" }}>
+            <div style={{ textAlign: "center", maxWidth: "600px", margin: "0 auto", width: "100%" }}>
                 <FadeIn>
                     <h2
                         className="section-title"
