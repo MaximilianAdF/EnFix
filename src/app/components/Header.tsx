@@ -183,37 +183,6 @@ export default function Header() {
                 </div>
             </div>
 
-            {/* LAYER 4: Contact (NOT blended, stays blue) */}
-            <div
-                style={{
-                    position: "fixed",
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    height: "var(--header-height)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    zIndex: 9998,
-                    pointerEvents: "none",
-                }}
-            >
-                <div style={{ pointerEvents: "auto" }}>
-                    <StrikethroughLink
-                        href="/contact"
-                        color="var(--accent)"
-                        lineColor="var(--accent)"
-                        fontSize="0.875rem"
-                        style={{
-                            textTransform: "uppercase",
-                            letterSpacing: "0.05em",
-                        }}
-                    >
-                        Contact
-                    </StrikethroughLink>
-                </div>
-            </div>
-
             <Menu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
         </>
     );

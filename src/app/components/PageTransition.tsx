@@ -94,9 +94,16 @@ export default function PageTransition({ children }: PageTransitionProps) {
         };
     }, [pathname, snapshotHTML]);
 
-    const showSnapshot = snapshotHTML !== null && stage !== "idle";
-    const overlayOpacity = stage === "darken" || stage === "enter" ? 0.35 : 0;
-    const isAnimating = stage !== "idle";
+    const isPathChanged = pathname !== prevPathnameRef.current;
+
+    // If the path has changed and we have a snapshot, we want to immediately 
+    // show the snapshot and hide the real content (simulate "darken" stage)
+    // to prevent the new page from flashing for one frame before the effect runs.
+    const effectiveStage = (isPathChanged && snapshotHTML !== null) ? "darken" : stage;
+
+    const showSnapshot = snapshotHTML !== null && effectiveStage !== "idle";
+    const overlayOpacity = effectiveStage === "darken" || effectiveStage === "enter" ? 0.35 : 0;
+    const isAnimating = effectiveStage !== "idle";
 
     return (
         <div style={{ position: "relative", backgroundColor: "#000000", minHeight: "100vh" }}>
@@ -145,12 +152,12 @@ export default function PageTransition({ children }: PageTransitionProps) {
                     zIndex: 20,
                     backgroundColor: "var(--bg-primary)",
                     transform:
-                        stage === "enter"
+                        effectiveStage === "enter"
                             ? "translateY(0)"
-                            : stage === "darken"
+                            : effectiveStage === "darken"
                                 ? "translateY(100vh)"
                                 : "none",
-                    opacity: stage === "darken" ? 0 : 1,
+                    opacity: effectiveStage === "darken" ? 0 : 1,
                     pointerEvents: stage === "idle" ? "auto" : "none",
                     transition:
                         stage === "enter"
