@@ -36,6 +36,11 @@ src/
 │   │   ├── FullPageSlide.tsx # Top-aligned, typing trigger
 │   │   ├── TypeWriter.tsx    # Slower, smooth typing
 │   │   └── ...
+### Page Transition Polish
+- **Goal**: Make the page transition feel like a physical "sheet of paper" slide, including the menu.
+- **Change**: Moved `Header` and `Footer` inside the `PageTransition` wrapper in `layout.tsx`.
+- **Result**: The entire viewport (including the menu) is captured in the snapshot. When navigating, the old page (plus menu) darkens and slides away, while the new page slides up.
+
 │   ├── page.tsx              # Homepage
 │   ├── whatwedo/page.tsx     # Services slides
 │   ├── howitworks/page.tsx   # Process slides
