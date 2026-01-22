@@ -54,6 +54,28 @@ const teamMembers = [
         coursework: ["Real-Time Systems", "Embedded Systems (C, FreeRTOS)", "Parallel Programming (Go)", "Compilers & Execution Environments"],
         languages: ["Swedish (Native)", "English (Fluent)", "Portuguese (Fluent)", "French (Conversational)"],
     },
+    {
+        name: "Ashkan Hanifi",
+        role: "Co-Founder & Embedded Systems Engineer",
+        image: null,
+        bio: "Embedded systems specialist. Built internal R&D tools at Ericsson. Designs hardware from PCB to protocol implementation. Currently pursuing MSc in Embedded Systems at KTH. Writes C, Java, and low-level firmware.",
+        education: [
+            { degree: "M.Sc. Embedded Systems", school: "KTH Royal Institute of Technology", year: "Expected 2027" },
+            { degree: "B.Sc. Computer Science", school: "KTH Royal Institute of Technology", year: "2022 – 2025" },
+            { degree: "Electrical Engineering (1 year)", school: "KTH Royal Institute of Technology", year: "2021 – 2022" },
+        ],
+        experience: [
+            { role: "R&D Summer Intern", company: "Ericsson", period: "2024", description: "Maintained and extended internal tools with Java & Spring Framework; collaborated with offices in Canada and China" },
+        ],
+        skills: ["Java", "C", "Python", "PostgreSQL", "FreeRTOS", "I2S Protocol", "DMA", "PCB Design", "Spring Framework"],
+        projects: [
+            { name: "Raspberry Pi Pico Synthesizer", description: "FM synthesizer with I2S via DMA and Programmable IO; custom PCB with PCM5102A DAC" },
+            { name: "Image Processing Application", description: "Multithreaded Java image processor with diverse filters and Swing GUI" },
+        ],
+        linkedin: "https://linkedin.com/in/ashkan-hanifi",
+        github: null,
+        languages: ["Swedish (Native)", "English (Full Professional)", "Spanish (Conversational)", "Persian (Conversational)"],
+    },
 ];
 
 export default function TeamPage() {
@@ -62,7 +84,7 @@ export default function TeamPage() {
             {/* Full Page Hero */}
             <FullPageHero
                 title="who we are."
-                subtitle="Two engineers from KTH with a shared mission: fix what AI breaks. We combine academic rigor with real-world production experience to deliver solutions that work."
+                subtitle="Three engineers from KTH with a shared mission: fix what AI breaks. We combine academic rigor with real-world production experience to deliver solutions that work."
             />
 
             {/* Team Members */}
