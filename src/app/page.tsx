@@ -22,6 +22,11 @@ const navSections = [
     description: "Submit → Diagnose → Fix → Deploy",
   },
   {
+    href: "/whoweare",
+    title: "who we are",
+    description: "Meet the engineers behind EnFix",
+  },
+  {
     href: "/contact",
     title: "contact",
     description: "Get in touch for a quote",
@@ -259,7 +264,7 @@ export default function Home() {
               }}
             >
               Our name comes from the Swedish &quot;En Fix&quot; (one fix) and the concept of
-              an &quot;infix&quot; — embedding something firmly in the middle. We embed quality
+              an &quot;infix&quot; embedding something firmly in the middle. We embed quality
               solutions into your codebase, fixing what&apos;s broken from the inside out.
             </p>
           </FadeIn>
