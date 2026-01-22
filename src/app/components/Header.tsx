@@ -61,6 +61,9 @@ export default function Header() {
                     style={{
                         textTransform: "uppercase",
                         letterSpacing: "0.05em",
+                        position: "absolute",
+                        left: "50%",
+                        transform: "translateX(-50%)",
                     }}
                 >
                     Contact
