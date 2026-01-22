@@ -104,7 +104,8 @@ export default function Home() {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "flex-start",
-          padding: "0 0 60px",
+          paddingTop: 0,
+          paddingBottom: "60px",
           paddingInline: "var(--page-padding-x)",
           position: "relative",
         }}

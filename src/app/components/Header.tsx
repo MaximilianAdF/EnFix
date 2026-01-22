@@ -29,7 +29,7 @@ export default function Header() {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "space-between",
-                    paddingInline: "var(--page-padding-x)",
+                    padding: "0 clamp(20px, 5vw, 60px)",
                     zIndex: 50,
                     background: "transparent",
                     transition: "background 0.4s ease",

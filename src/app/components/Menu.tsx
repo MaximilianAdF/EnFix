@@ -77,7 +77,7 @@ export default function Menu({ isOpen, onClose }: MenuProps) {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "space-between",
-                    paddingInline: "var(--page-padding-x)",
+                    padding: "0 clamp(20px, 5vw, 60px)",
                     zIndex: 101,
                 }}
             >
@@ -131,8 +131,7 @@ export default function Menu({ isOpen, onClose }: MenuProps) {
             <div
                 style={{
                     flex: 1,
-                    padding: "var(--header-height) 0 60px",
-                    paddingInline: "var(--page-padding-x)",
+                    padding: "var(--header-height) clamp(20px, 5vw, 60px) 60px",
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "center",
@@ -166,8 +165,7 @@ export default function Menu({ isOpen, onClose }: MenuProps) {
             <nav
                 style={{
                     flex: 1,
-                    padding: "var(--header-height) 0 60px",
-                    paddingInline: "var(--page-padding-x)",
+                    padding: "var(--header-height) clamp(20px, 5vw, 60px) 60px",
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "center",
