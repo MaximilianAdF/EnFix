@@ -5,7 +5,7 @@ import Link from "next/link";
 
 /**
  * Logo link with strikethrough hover effect.
- * Used in Header and Footer.
+ * Used in Footer only - Header has its own implementation.
  */
 export default function LogoLink() {
     const [isHovered, setIsHovered] = useState(false);
