@@ -1,37 +1,23 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import TypeWriter from "./components/TypeWriter";
 import RotatingWords from "./components/RotatingWords";
 import FadeIn from "./components/FadeIn";
 import StrikethroughLink from "./components/StrikethroughLink";
 import CTASection from "./components/CTASection";
+import ScrollIndicator from "./components/ScrollIndicator";
+import { NAV_LINKS } from "./lib/constants";
 
 const rotatingWords = ["fix", "debug", "refactor", "repair", "optimize", "rescue"];
 
-const navSections = [
-  {
-    href: "/whatwedo",
-    title: "what we do",
-    description: "Debugging, refactoring, and fixing AI-generated code",
-  },
-  {
-    href: "/howitworks",
-    title: "how it works",
-    description: "Submit → Diagnose → Fix → Deploy",
-  },
-  {
-    href: "/whoweare",
-    title: "who we are",
-    description: "Meet the engineers behind EnFix",
-  },
-  {
-    href: "/contact",
-    title: "contact",
-    description: "Get in touch for a quote",
-  },
-];
+// Filter out the home link and ensure non-null description
+const navSections = NAV_LINKS.filter(link => link.href !== "/").map(link => ({
+  ...link,
+  title: link.label,
+  description: link.description || ""
+}));
 
 const newsItems = [
   {
@@ -108,17 +94,6 @@ function NavSectionLink({ href, title, description }: { href: string; title: str
 }
 
 export default function Home() {
-  const [hasScrolled, setHasScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setHasScrolled(window.scrollY > 50);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
   return (
     <div id="top">
       {/* Hero Section */}
@@ -129,7 +104,9 @@ export default function Home() {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "flex-start",
-          padding: "0 clamp(20px, 5vw, 60px) 60px",
+          paddingTop: 0,
+          paddingBottom: "60px",
+          paddingInline: "var(--page-padding-x)",
           position: "relative",
         }}
       >
@@ -166,37 +143,14 @@ export default function Home() {
         </div>
 
         {/* Scroll Indicator */}
-        <div
-          style={{
-            position: "absolute",
-            bottom: "40px",
-            left: "50%",
-            transform: `translateX(-50%) translateY(${hasScrolled ? "10px" : "0"})`,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: "0.5rem",
-            color: "var(--text-light)",
-            opacity: hasScrolled ? 0 : 0.6,
-            transition: "opacity 0.5s ease, transform 0.5s ease",
-            pointerEvents: "none",
-          }}
-        >
-          <span style={{ fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.1em" }}>
-            Scroll
-          </span>
-          <span style={{
-            fontSize: "1.25rem",
-            animation: hasScrolled ? "none" : "bounce 2s infinite",
-          }}>↓</span>
-        </div>
+        <ScrollIndicator />
       </section>
 
       {/* Divider */}
-      <div className="divider" style={{ margin: "0 clamp(20px, 5vw, 60px)" }} />
+      <div className="divider" style={{ marginInline: "var(--page-padding-x)" }} />
 
       {/* Navigation Sections */}
-      <section style={{ padding: "0 clamp(20px, 5vw, 60px)" }}>
+      <section style={{ paddingInline: "var(--page-padding-x)" }}>
         <div style={{ maxWidth: "var(--content-max-width)", margin: "0 auto" }}>
           {navSections.map((section, index) => (
             <FadeIn key={section.href} delay={index * 100}>
@@ -213,7 +167,9 @@ export default function Home() {
       {/* About Section */}
       <section
         style={{
-          padding: "var(--section-padding) clamp(20px, 5vw, 60px)",
+          paddingTop: "var(--section-padding)",
+          paddingBottom: "var(--section-padding)",
+          paddingInline: "var(--page-padding-x)",
           background: "var(--bg-secondary)",
           marginTop: "3rem",
         }}
@@ -280,7 +236,7 @@ export default function Home() {
       </section>
 
       {/* News Section */}
-      <section style={{ padding: "var(--section-padding) clamp(20px, 5vw, 60px)" }}>
+      <section style={{ paddingTop: "var(--section-padding)", paddingBottom: "var(--section-padding)", paddingInline: "var(--page-padding-x)" }}>
         <div style={{ maxWidth: "var(--content-max-width)", margin: "0 auto" }}>
           <FadeIn>
             <h2 className="section-title" style={{ marginBottom: "3rem" }}>

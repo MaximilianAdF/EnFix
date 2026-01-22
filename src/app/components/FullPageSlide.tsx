@@ -67,9 +67,12 @@ export default function FullPageSlide({
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "flex-start", // Align to top like Tacto
-                padding: isFirst
-                    ? "calc(var(--header-height) + 80px) clamp(20px, 5vw, 60px) 60px"
-                    : "120px clamp(20px, 5vw, 60px) 60px",
+                paddingTop: isFirst
+                    ? "calc(var(--header-height) + 80px)"
+                    : "120px",
+                paddingLeft: "var(--page-padding-x)",
+                paddingRight: "var(--page-padding-x)",
+                paddingBottom: "60px",
                 position: "relative",
                 borderTop: isFirst ? "none" : "1px solid var(--border)",
             }}
@@ -139,7 +142,7 @@ export default function FullPageSlide({
                         pointerEvents: "none",
                     }}
                 >
-                    <span style={{ 
+                    <span style={{
                         fontSize: "1.25rem",
                         animation: showScrollIndicator ? "bounce 2s infinite" : "none",
                     }}>↓</span>

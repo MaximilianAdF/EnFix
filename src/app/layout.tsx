@@ -3,7 +3,6 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import ContactHeader from "./components/ContactHeader";
 import PageTransition from "./components/PageTransition";
 
 const inter = Inter({
@@ -57,7 +56,6 @@ export default function RootLayout({
                 <Header />
                 <main>
                     <PageTransition>
-                        <ContactHeader />
                         {children}
                     </PageTransition>
                 </main>

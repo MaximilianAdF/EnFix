@@ -9,11 +9,31 @@ export const SOCIAL_LINKS = [
 ] as const;
 
 export const NAV_LINKS = [
-    { href: "/", label: "home" },
-    { href: "/whatwedo", label: "what we do" },
-    { href: "/howitworks", label: "how it works" },
-    { href: "/whoweare", label: "who we are" },
-    { href: "/contact", label: "contact" },
+    {
+        href: "/",
+        label: "home",
+        description: null
+    },
+    {
+        href: "/whatwedo",
+        label: "what we do",
+        description: "Debugging, refactoring, and fixing AI-generated code"
+    },
+    {
+        href: "/howitworks",
+        label: "how it works",
+        description: "Submit → Diagnose → Fix → Deploy"
+    },
+    {
+        href: "/whoweare",
+        label: "who we are",
+        description: "Meet the engineers behind EnFix"
+    },
+    {
+        href: "/contact",
+        label: "contact",
+        description: "Get in touch for a quote"
+    },
 ] as const;
 
 export const EMAIL = "hello@enfix.dev";

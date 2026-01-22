@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import StrikethroughLink from "./StrikethroughLink";
 import EmailLink from "./EmailLink";
+import SectionLabel from "./SectionLabel";
 import { NAV_LINKS, SOCIAL_LINKS } from "../lib/constants";
 
 interface MenuProps {
@@ -138,31 +139,11 @@ export default function Menu({ isOpen, onClose }: MenuProps) {
             >
                 {/* Contact Info */}
                 <div>
-                    <p
-                        style={{
-                            fontSize: "0.875rem",
-                            color: "var(--text-secondary)",
-                            marginBottom: "1rem",
-                            textTransform: "uppercase",
-                            letterSpacing: "0.1em",
-                        }}
-                    >
-                        Get in touch
-                    </p>
+                    <SectionLabel>Get in touch</SectionLabel>
                     <EmailLink large />
 
                     <div style={{ marginTop: "2rem" }}>
-                        <p
-                            style={{
-                                fontSize: "0.875rem",
-                                color: "var(--text-secondary)",
-                                marginBottom: "1rem",
-                                textTransform: "uppercase",
-                                letterSpacing: "0.1em",
-                            }}
-                        >
-                            Follow us
-                        </p>
+                        <SectionLabel>Follow us</SectionLabel>
                         <div style={{ display: "flex", gap: "1.5rem" }}>
                             {SOCIAL_LINKS.map((link) => (
                                 <StrikethroughLink

@@ -91,7 +91,9 @@ export default function TeamPage() {
             <section
                 style={{
                     minHeight: "100vh",
-                    padding: "8rem 2rem",
+                    paddingTop: "8rem",
+                    paddingBottom: "8rem",
+                    paddingInline: "var(--page-padding-x)",
                     background: "var(--background)",
                 }}
             >

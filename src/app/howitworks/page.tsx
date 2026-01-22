@@ -180,7 +180,9 @@ export default function HowItWorks() {
                 style={{
                     display: "flex",
                     alignItems: "center",
-                    padding: "var(--section-padding) clamp(20px, 5vw, 60px)",
+                    paddingTop: "var(--section-padding)",
+                    paddingBottom: "var(--section-padding)",
+                    paddingInline: "var(--page-padding-x)",
                     background: "var(--bg-secondary)",
                 }}
             >
