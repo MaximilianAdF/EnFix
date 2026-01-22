@@ -53,11 +53,11 @@ export default function RootLayout({
     return (
         <html lang="en" className={inter.variable}>
             <body>
-                <PageTransition>
-                    <Header />
-                    <main>{children}</main>
-                    <Footer />
-                </PageTransition>
+                <Header />
+                <main>
+                    <PageTransition>{children}</PageTransition>
+                </main>
+                <Footer />
             </body>
         </html>
     );

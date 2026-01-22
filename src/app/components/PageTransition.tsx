@@ -149,7 +149,7 @@ export default function PageTransition({ children }: PageTransitionProps) {
                             ? "translateY(0)"
                             : stage === "darken"
                                 ? "translateY(100vh)"
-                                : "translateY(0)",
+                                : "none",
                     opacity: stage === "darken" ? 0 : 1,
                     pointerEvents: stage === "idle" ? "auto" : "none",
                     transition:

@@ -39,6 +39,7 @@ src/
 ### Page Transition Polish
 - **Goal**: Make the page transition feel like a physical "sheet of paper" slide, including the menu.
 - **Change**: Moved `Header` and `Footer` inside the `PageTransition` wrapper in `layout.tsx`.
+- **Critical Fix**: Set `transform: "none"` on the container when idle. This ensures `position: fixed` elements (like the Header) remain relative to the viewport, not the container (which happens when any transform is applied).
 - **Result**: The entire viewport (including the menu) is captured in the snapshot. When navigating, the old page (plus menu) darkens and slides away, while the new page slides up.
 
 │   ├── page.tsx              # Homepage
