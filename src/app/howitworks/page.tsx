@@ -18,7 +18,7 @@ const steps = [
             },
             {
                 title: "Share your repository",
-                description: "GitHub, GitLab, Bitbucket — we work with them all",
+                description: "GitHub, GitLab, Bitbucket, we work with them all",
             },
             {
                 title: "Describe the issue",
@@ -225,7 +225,7 @@ export default function HowItWorks() {
                             </h3>
                             <p style={{ color: "var(--text-secondary)", lineHeight: 1.7 }}>
                                 Small fixes can be done in 1-3 days. Larger refactors may take 1-2 weeks.
-                                We&apos;ll give you a realistic timeline upfront — and we stick to it.
+                                We&apos;ll give you a realistic timeline upfront and we stick to it.
                             </p>
                         </div>
 
